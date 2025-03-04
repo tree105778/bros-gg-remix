@@ -21,11 +21,6 @@ export type TraitsStateStore = {
   removeAllTraitsState: () => void;
 };
 
-export type State = {
-  droppedItems: string[];
-  traits: { [key: string]: number };
-};
-
 export interface ChampionIndexInfo {
   championAndIndex: Record<string, Champion>;
   setChampionIndex: (x: number, y: number, champion: Champion) => void;
