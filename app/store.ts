@@ -24,19 +24,22 @@ export const useChampionAndIndexStore = create<ChampionIndexInfo>()(
 
 const initialTraitsState: TraitsState = {
   droppedItems: [],
-  traits: {},
+  traits: [],
 };
 
 export const useTraitsStateStore = create<TraitsStateStore>((set) => ({
   ...initialTraitsState,
   addTraitsState: (champion) =>
     set((state) => {
-      const newTraits = { ...state.traits };
+      const newTraits = [...state.traits];
       if (!state.droppedItems.includes(champion.name)) {
         champion.traits.forEach((trait) => {
-          newTraits[trait] = (newTraits[trait] || 0) + 1;
+          const existingTraits = newTraits.find((t) => t.trait === trait);
+          if (existingTraits) existingTraits.count += 1;
+          else newTraits.push({ trait, count: 1 });
         });
       }
+      newTraits.sort((a, b) => b.count - a.count);
       return {
         ...state,
         droppedItems: [...state.droppedItems, champion.name],
@@ -47,7 +50,7 @@ export const useTraitsStateStore = create<TraitsStateStore>((set) => ({
     set((state) => {
       const { droppedItems, traits } = state;
       const newDroppedItems = [...droppedItems];
-      const newTriats = { ...traits };
+      const newTraits = [...traits];
       const firstIndex = newDroppedItems.findIndex(
         (item) => item === champion.name
       );
@@ -56,15 +59,18 @@ export const useTraitsStateStore = create<TraitsStateStore>((set) => ({
       }
       if (!newDroppedItems.includes(champion.name)) {
         champion.traits.forEach((trait) => {
-          if (newTriats[trait] > 1) {
-            newTriats[trait] -= 1;
-          } else delete newTriats[trait];
+          const existingIndex = newTraits.findIndex((t) => t.trait === trait);
+          if (existingIndex === -1) return;
+          if (newTraits[existingIndex].count > 1) {
+            newTraits[existingIndex].count -= 1;
+          } else newTraits.splice(existingIndex, 1);
         });
       }
+      newTraits.sort((a, b) => b.count - a.count);
       return {
         ...state,
         droppedItems: newDroppedItems,
-        traits: newTriats,
+        traits: newTraits,
       };
     }),
   removeAllTraitsState: () =>

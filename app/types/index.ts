@@ -8,14 +8,34 @@ export type Champion = {
   item?: string[];
 };
 
+export type ActivationType = {
+  unit_count: number;
+  effect: string;
+  image: string;
+};
+
+export type SynergyTraits = {
+  name: string;
+  description: string;
+  default_image: string;
+  activation: ActivationType[];
+};
+
+export interface SynergyData {
+  set: string;
+  traits: SynergyTraits[];
+}
+
+export type Traits = { trait: string; count: number };
+
 export type TraitsState = {
   droppedItems: string[];
-  traits: { [key: string]: number };
+  traits: Traits[];
 };
 
 export type TraitsStateStore = {
-  droppedItems: string[];
-  traits: { [key: string]: number };
+  droppedItems: TraitsState["droppedItems"];
+  traits: TraitsState["traits"];
   addTraitsState: (champion: Champion) => void;
   removeTraitsState: (champion: Champion) => void;
   removeAllTraitsState: () => void;

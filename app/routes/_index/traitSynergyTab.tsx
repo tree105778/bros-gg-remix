@@ -1,4 +1,5 @@
 import { useChampionAndIndexStore, useTraitsStateStore } from "~/store";
+import SynergyInfo from "./synergyInfo";
 
 export default function TraitSynergyTab() {
   const { traits, removeAllTraitsState } = useTraitsStateStore();
@@ -8,16 +9,14 @@ export default function TraitSynergyTab() {
 
   return (
     <div className="flex flex-col justify-center">
-      <div className="flex bg-[#27282e] gap-1 flex-wrap">
-        {Object.entries(traits).map(([trait, count]) => (
-          <div
-            key={trait}
-            className="border-[1px] rounded-[4px] border-[#323232] text-white"
-          >
-            {trait}: {count}
+      <div className="flex gap-0.5 flex-wrap border-black">
+        {traits.map((trait, idx) => (
+          <div key={idx} className="flex gap-1 m-1">
+            <SynergyInfo trait={trait} />
           </div>
         ))}
       </div>
+      <hr />
       <button
         onClick={() => {
           resetAllChampionIndex();
