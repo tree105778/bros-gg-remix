@@ -32,10 +32,7 @@ export default function SynergyInfo({ trait }: { trait: Traits }) {
       </div>
     );
   }
-  // const synergyImage =
-  //   levelIndex === -1
-  //     ? traitInfo.default_image
-  //     : traitInfo.activation[levelIndex].image;
+
   const displaySynergyInfo = {
     synergyImage: traitInfo.activation[levelIndex].image,
     currentLevel: activate_level[levelIndex],

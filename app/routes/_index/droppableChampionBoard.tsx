@@ -55,7 +55,6 @@ export default function DroppableChampionBoard({
       }),
       end: () => {
         if (champion) {
-          // setChampion(undefined);
           removeChampionIndex(X, Y);
           removeTraitsState(champion);
         }
