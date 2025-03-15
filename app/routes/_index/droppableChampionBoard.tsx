@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { useDrag, useDrop } from "react-dnd";
 import { useChampionAndIndexStore, useTraitsStateStore } from "~/store";
-import type { Champion } from "~/types";
+import type { Champion, Item } from "~/types";
+import DroppableItemContainer from "./droppableItemContainer";
 
 export default function DroppableChampionBoard({
   X,
@@ -34,6 +35,23 @@ export default function DroppableChampionBoard({
         canDrop: monitor.canDrop(),
         isOver: monitor.isOver(),
       }),
+    }),
+    [champion]
+  );
+
+  const [, dropItem] = useDrop(
+    () => ({
+      accept: "ITEM",
+      canDrop: () => !!champion && (champion.item?.length || 0) < 3,
+      drop: (item: Item) => {
+        if (champion) {
+          const newChampion: Champion = {
+            ...champion,
+            item: [...(champion.item || []), item],
+          };
+          setChampionIndex(X, Y, newChampion);
+        }
+      },
     }),
     [champion]
   );
@@ -104,6 +122,7 @@ export default function DroppableChampionBoard({
           ref={(node) => {
             if (node) {
               drop(node);
+              dropItem(node);
             }
           }}
           style={{
@@ -128,6 +147,7 @@ export default function DroppableChampionBoard({
             </div>
           ) : null}
         </div>
+        <DroppableItemContainer champion={champion} />
       </div>
     </>
   );

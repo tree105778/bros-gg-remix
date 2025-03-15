@@ -1,16 +1,29 @@
 import DraggableChampionImage from "./draggableChampionImage";
 import { useEffect, useState } from "react";
 import type { ChangeEvent } from "react";
-import type { Champion } from "~/types";
+import type { Champion, DataState } from "~/types";
 import clsx from "clsx";
 import { processingChampions, updateProcessedChampions } from "~/lib";
 import { getChoseong } from "~/lib/getChoseong";
 
-export default function ChampionSelectBoard({ url }: { url: string }) {
+const ChampionSelectBoard = function ({
+  data,
+}: {
+  data: DataState<Champion[]>;
+}) {
   const [champions, setChampions] = useState<Champion[]>([]);
   const [tabNavItem, setTabNabItem] = useState("name");
   const [processedChampions, setProcessedChampions] = useState<Champion[]>([]);
   const [onChangeChampionText, setOnchangeChampionText] = useState("");
+
+  useEffect(() => {
+    if (data.data) {
+      setChampions(data.data);
+      setProcessedChampions(data.data);
+    }
+  }, [data.data]);
+
+  if (data.loading || !data.data) return ChampionSkeleton();
 
   const searchChampions = (text: string) => {
     if (text === "") setProcessedChampions([...champions]);
@@ -38,16 +51,6 @@ export default function ChampionSelectBoard({ url }: { url: string }) {
     setOnchangeChampionText(text);
   };
 
-  useEffect(() => {
-    async function fetchChampions(url: string) {
-      const response = await fetch(url);
-      const data = await response.json();
-      setChampions(data);
-      setProcessedChampions(data);
-    }
-    fetchChampions(url);
-  }, [url]);
-
   const setClsxClass: (state: string) => string = (state) =>
     clsx(
       "w-[52px] h-[44px] text-center leading-[2.5]",
@@ -55,8 +58,6 @@ export default function ChampionSelectBoard({ url }: { url: string }) {
       tabNavItem === state &&
         "text-[#ca9372] font-semibold border-b-2 border-[#ca9372]"
     );
-
-  if (!champions) return <div>Loading...</div>;
 
   return (
     <div className="bg-[#2D2F37] border-[#e5e7eb] pt-2">
@@ -107,4 +108,16 @@ export default function ChampionSelectBoard({ url }: { url: string }) {
       </div>
     </div>
   );
-}
+};
+
+const ChampionSkeleton = () => (
+  <div className="flex gap-2 flex-wrap m-3 animate-pulse">
+    {Array(50)
+      .fill(0)
+      .map((_, i) => (
+        <div key={i} className="w-16 h-16 bg-gray-700 rounded"></div>
+      ))}
+  </div>
+);
+
+export default ChampionSelectBoard;

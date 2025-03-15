@@ -1,5 +1,6 @@
-import type { Champion } from "~/types";
+import type { Champion, DataState } from "~/types";
 import { getChoseong } from "./getChoseong";
+import type React from "react";
 
 export const processingChampions = (
   criteria: string,
@@ -46,4 +47,23 @@ export const updateProcessedChampions = (
     );
   }
   return newChampions;
+};
+
+export const fetchData = async <T>(
+  url: string,
+  setState: React.Dispatch<React.SetStateAction<DataState<T>>>
+) => {
+  try {
+    const response = await fetch(url);
+    if (!response.ok)
+      throw new Error(`Data fetching error! stats: {response.status}`);
+    const data = await response.json();
+    setState({ data, loading: false, error: null });
+  } catch (error) {
+    setState((prev) => ({
+      ...prev,
+      loading: false,
+      error: error instanceof Error ? error.message : "Unknown Error occurred",
+    }));
+  }
 };

@@ -345,9 +345,9 @@
     "image": "/items/image/굳건한 심장.png"
   },
   {
-    "name": "위모그의 갑옷",
+    "name": "워모그의 갑옷",
     "effects": "12%의 최대 체력 획득",
-    "image": "/items/image/위모그의 갑옷.png"
+    "image": "/items/image/워모그의 갑옷.png"
   },
   {
     "name": "모렐로노미콘",
@@ -480,9 +480,9 @@
     "image": "/items/image/실험체 상징.png"
   },
   {
-    "name": "검은 장미단 상징",
+    "name": "검은장미단 상징",
     "effects": "주문력 +10, [고유] 장착 시 검은 장미단 특성 획득",
-    "image": "/items/image/검은 장미단 상징.png"
+    "image": "/items/image/검은장미단 상징.png"
   },
   {
     "name": "반군 상징",
@@ -525,9 +525,9 @@
     "image": "/items/image/마법사 상징.png"
   },
   {
-    "name": "기둥타격대 상징",
+    "name": "기동타격대 상징",
     "effects": "공격속도 + 10%, [고유] 장착 시 기동타격대 특성 획득",
-    "image": "/items/image/기둥타격대 상징.png"
+    "image": "/items/image/기동타격대 상징.png"
   },
   {
     "name": "선도자 상징",

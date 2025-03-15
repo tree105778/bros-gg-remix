@@ -5,7 +5,7 @@ export type Champion = {
   traits: string[];
   image: string;
   star?: number;
-  item?: string[];
+  item?: Item[];
 };
 
 export type ActivationType = {
@@ -24,6 +24,17 @@ export type SynergyTraits = {
 export interface SynergyData {
   set: string;
   traits: SynergyTraits[];
+}
+
+export interface Item {
+  name: string;
+  image: string;
+}
+
+export interface ItemData extends Item {
+  effects: string;
+  composite_items?: string[];
+  combinable_items?: string[];
 }
 
 export type Traits = { trait: string; count: number };
@@ -47,3 +58,9 @@ export interface ChampionIndexInfo {
   removeChampionIndex: (x: number, y: number, champion?: Champion) => void;
   resetAllChampionIndex: () => void;
 }
+
+export type DataState<T> = {
+  data: T | null;
+  loading: boolean;
+  error: string | null;
+};
