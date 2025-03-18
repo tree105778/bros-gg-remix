@@ -1,12 +1,12 @@
-import { DndProvider } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
 import TraitSynergyTab from "./traitSynergyTab";
 import BoardBuilder from "./boardBuilder";
 import SelectBoard from "./selectBoard";
+import { DndProvider } from "react-dnd-multi-backend";
+import { HTML5toTouch } from "rdndmb-html5-to-touch";
 
 export default function BoardWithSelect() {
   return (
-    <DndProvider backend={HTML5Backend}>
+    <DndProvider options={HTML5toTouch}>
       <TraitSynergyTab />
       <BoardBuilder />
       <SelectBoard />

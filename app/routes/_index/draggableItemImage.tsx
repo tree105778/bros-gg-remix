@@ -1,7 +1,7 @@
 import { useDrag } from "react-dnd";
-import type { Item, ItemData } from "~/types";
+import type { Item } from "~/types";
 
-export default function DraggableItemImage({ item }: { item: ItemData }) {
+export default function DraggableItemImage({ item }: { item: Item }) {
   const { name, image } = item;
   const [, drag] = useDrag<Item>(() => ({
     type: "ITEM",

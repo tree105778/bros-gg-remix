@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useDrag, useDrop } from "react-dnd";
 import { useChampionAndIndexStore, useTraitsStateStore } from "~/store";
 import type { Champion, Item } from "~/types";
-import DroppableItemContainer from "./droppableItemContainer";
+import DraggableContainerItem from "./draggableContainerItem";
 
 export default function DroppableChampionBoard({
   X,
@@ -71,10 +71,15 @@ export default function DroppableChampionBoard({
       collect: (monitor) => ({
         isDragging: monitor.isDragging(),
       }),
-      end: () => {
+      end: (_, monitor) => {
+        const diff = monitor.getDifferenceFromInitialOffset();
+        const diff_x = Math.abs(diff?.x || 51);
+        const diff_y = Math.abs(diff?.y || 51);
         if (champion) {
-          removeChampionIndex(X, Y);
-          removeTraitsState(champion);
+          if (diff_x > 50 || diff_y > 50) {
+            removeChampionIndex(X, Y);
+            removeTraitsState(champion);
+          }
         }
       },
     }),
@@ -147,7 +152,21 @@ export default function DroppableChampionBoard({
             </div>
           ) : null}
         </div>
-        <DroppableItemContainer champion={champion} />
+        {champion != undefined && champion.item != undefined ? (
+          <div className="absolute left-0 right-0 bottom-0">
+            <div className="flex justify-center">
+              {champion.item.map((item, idx) => (
+                <DraggableContainerItem
+                  key={idx}
+                  idx={idx}
+                  X={X}
+                  Y={Y}
+                  item={item}
+                />
+              ))}
+            </div>
+          </div>
+        ) : null}
       </div>
     </>
   );
