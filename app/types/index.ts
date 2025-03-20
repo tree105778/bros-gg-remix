@@ -1,3 +1,10 @@
+enum ItemType {
+  BASE = "BASE",
+  COMBINED = "COMBINED",
+  EMBLEM = "EMBLEM",
+  SPECIAL = "SPECIAL",
+}
+
 export type Champion = {
   id: number;
   name: string;
@@ -32,10 +39,15 @@ export interface Item {
 }
 
 export interface ItemData extends Item {
+  id: number;
+  type: ItemType;
   effects: string;
-  composite_items?: string[];
-  combinable_items?: string[];
 }
+// export interface ItemData extends Item {
+//   effects: string;
+//   composite_items?: string[];
+//   combinable_items?: string[];
+// }
 
 export type Traits = { trait: string; count: number };
 
