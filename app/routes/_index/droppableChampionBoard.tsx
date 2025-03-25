@@ -3,6 +3,9 @@ import { useDrag, useDrop } from "react-dnd";
 import { useChampionAndIndexStore, useTraitsStateStore } from "~/store";
 import type { Champion, Item } from "~/types";
 import DraggableContainerItem from "./draggableContainerItem";
+import { isItemDroppable, itemCombineProcess } from "~/lib/item";
+import { useLoaderData } from "@remix-run/react";
+import type { loader } from "./route";
 
 export default function DroppableChampionBoard({
   X,
@@ -12,6 +15,7 @@ export default function DroppableChampionBoard({
   Y: number;
 }) {
   const [champion, setChampion] = useState<Champion>();
+  const { itemRecipes, items } = useLoaderData<typeof loader>();
   const { championAndIndex, setChampionIndex, removeChampionIndex } =
     useChampionAndIndexStore();
   const { addTraitsState, removeTraitsState } = useTraitsStateStore();
@@ -40,21 +44,43 @@ export default function DroppableChampionBoard({
   );
 
   const [, dropItem] = useDrop(
-    () => ({
+    {
       accept: "ITEM",
-      canDrop: () => !!champion && (champion.item?.length || 0) < 3,
+      canDrop: () => !!champion && isItemDroppable(champion),
       drop: (item: Item) => {
         if (champion) {
+          const newItem = itemCombineProcess(
+            champion,
+            item,
+            items,
+            itemRecipes
+          );
           const newChampion: Champion = {
             ...champion,
-            item: [...(champion.item || []), item],
+            item: newItem,
           };
           setChampionIndex(X, Y, newChampion);
         }
       },
-    }),
+    },
     [champion]
   );
+  // const [, dropItem] = useDrop(
+  //   () => ({
+  //     accept: "ITEM",
+  //     canDrop: () => !!champion && (champion.item?.length || 0) < 3,
+  //     drop: (item: Item) => {
+  //       if (champion) {
+  //         const newChampion: Champion = {
+  //           ...champion,
+  //           item: [...(champion.item || []), item],
+  //         };
+  //         setChampionIndex(X, Y, newChampion);
+  //       }
+  //     },
+  //   }),
+  //   [champion]
+  // );
 
   const [, drag] = useDrag<Champion, void, { isDragging: boolean }>(
     () => ({

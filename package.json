@@ -16,6 +16,7 @@
     "@tailwindcss/vite": "^4.0.8",
     "@vercel/analytics": "^1.2.2",
     "@vercel/remix": "2.10.0",
+    "ajv": "^8.17.1",
     "clsx": "^2.1.1",
     "immer": "^10.1.1",
     "isbot": "^4",
@@ -45,6 +46,7 @@
   },
   "overrides": {
     "cookie": "1.0.1",
-    "esbuild": "0.25.0"
+    "esbuild": "0.25.0",
+    "uri-js": "npm:uri-js-replace"
   }
 }

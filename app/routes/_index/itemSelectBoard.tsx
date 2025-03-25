@@ -1,24 +1,41 @@
-import { useEffect, useState } from "react";
-import type { DataState, ItemData } from "~/types";
+// import { useState } from "react";
+// import type { FetchItems, Item } from "~/types";
+// import DraggableItemImage from "./draggableItemImage";
+import { useLoaderData } from "@remix-run/react";
+import type { loader } from "./route";
 import DraggableItemImage from "./draggableItemImage";
+import type { ItemType } from "~/types";
 
-const ItemSelectBoard = function ({ data }: { data: DataState<ItemData[]> }) {
-  const [items, setItems] = useState<ItemData[]>([]);
+const ItemSelectBoard = function () {
+  const { items } = useLoaderData<typeof loader>();
 
-  useEffect(() => {
-    if (data.data) {
-      setItems(data.data);
-    }
-  }, [data.data]);
-
-  if (data.loading || !data.data) return <ItemSkeleton />;
   return (
     <>
-      <div className="flex gap-2 flex-wrap m-3">
-        {items.map((item, idx) => (
-          <DraggableItemImage key={idx} item={item} />
-        ))}
-      </div>
+      {/* <Suspense fallback={<ItemSkeleton />}>
+        <div className="flex gap-2 flex-wrap m-3">
+          <Await resolve={items}>
+            {(items) => {
+              if (items) {
+                return items.map((item) => {
+                  const newItem = { ...item, type: item.type as ItemType };
+                  return <DraggableItemImage key={item.id} item={newItem} />;
+                });
+              }
+            }}
+          </Await>
+        </div>
+      </Suspense> */}
+
+      {items ? (
+        <div className="flex gap-2 flex-wrap m-3">
+          {items.map((item, idx) => {
+            const newItem = { ...item, type: item.type as ItemType };
+            return <DraggableItemImage key={idx} item={newItem} />;
+          })}
+        </div>
+      ) : (
+        <ItemSkeleton />
+      )}
     </>
   );
 };

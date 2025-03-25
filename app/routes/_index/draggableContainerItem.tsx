@@ -15,12 +15,14 @@ export default function DraggableContainerItem({
 }) {
   const { championAndIndex, setChampionIndex } = useChampionAndIndexStore();
   const champion = championAndIndex[`${X},${Y}`];
-  const { name, image } = item;
+  const { id, name, image, type } = item;
   const [, drag] = useDrag<Item>({
     type: "ITEM",
     item: {
+      id,
       name,
       image,
+      type,
     },
     end: (item, monitor) => {
       if (champion.item) {

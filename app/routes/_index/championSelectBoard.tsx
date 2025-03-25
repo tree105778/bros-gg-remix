@@ -1,29 +1,26 @@
 import DraggableChampionImage from "./draggableChampionImage";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import type { ChangeEvent } from "react";
-import type { Champion, DataState } from "~/types";
+import type { FetchChampions } from "~/types";
 import clsx from "clsx";
 import { processingChampions, updateProcessedChampions } from "~/lib";
 import { getChoseong } from "~/lib/getChoseong";
+import { useLoaderData } from "@remix-run/react";
+import type { loader } from "./route";
 
-const ChampionSelectBoard = function ({
-  data,
-}: {
-  data: DataState<Champion[]>;
-}) {
-  const [champions, setChampions] = useState<Champion[]>([]);
+const ChampionSelectBoard = function () {
+  const { champions: initialChampionsData } = useLoaderData<typeof loader>();
+
+  const [champions, setChampions] = useState<FetchChampions[]>(
+    initialChampionsData || []
+  );
   const [tabNavItem, setTabNabItem] = useState("name");
-  const [processedChampions, setProcessedChampions] = useState<Champion[]>([]);
+  const [processedChampions, setProcessedChampions] = useState<
+    FetchChampions[]
+  >(initialChampionsData || []);
   const [onChangeChampionText, setOnchangeChampionText] = useState("");
 
-  useEffect(() => {
-    if (data.data) {
-      setChampions(data.data);
-      setProcessedChampions(data.data);
-    }
-  }, [data.data]);
-
-  if (data.loading || !data.data) return ChampionSkeleton();
+  if (initialChampionsData == null) return ChampionSkeleton();
 
   const searchChampions = (text: string) => {
     if (text === "") setProcessedChampions([...champions]);

@@ -1,19 +1,30 @@
-enum ItemType {
+import type { Database } from "./database.types";
+
+export enum ItemType {
   BASE = "BASE",
   COMBINED = "COMBINED",
   EMBLEM = "EMBLEM",
   SPECIAL = "SPECIAL",
 }
 
-export type Champion = {
-  id: number;
-  name: string;
-  cost: number;
-  traits: string[];
-  image: string;
-  star?: number;
-  item?: Item[];
-};
+export type FetchChampions =
+  Database["public"]["Tables"]["champions_s13"]["Row"];
+
+export type FetchItems = Database["public"]["Tables"]["items"]["Row"];
+
+export type Champion = FetchChampions & { star?: number; item?: Item[] };
+
+export type ItemRecipes = Database["public"]["Tables"]["item_recipes"]["Row"];
+
+// export type Champion = {
+//   id: number;
+//   name: string;
+//   cost: number;
+//   traits: string[];
+//   image: string;
+//   star?: number;
+//   item?: Item[];
+// };
 
 export type ActivationType = {
   unit_count: number;
@@ -34,13 +45,13 @@ export interface SynergyData {
 }
 
 export interface Item {
+  id: number;
   name: string;
   image: string;
+  type: ItemType;
 }
 
 export interface ItemData extends Item {
-  id: number;
-  type: ItemType;
   effects: string;
 }
 // export interface ItemData extends Item {

@@ -1,6 +1,21 @@
+import {
+  fetchChampionsData,
+  fetchItemData,
+  fetchItemRecipes,
+} from "~/lib/supabase";
 import BoardWithSelect from "./boardWithSelect";
 
-export async function loader() {}
+export async function loader() {
+  const champions = await fetchChampionsData();
+  const items = await fetchItemData();
+  const itemRecipes = await fetchItemRecipes();
+
+  return {
+    champions,
+    items,
+    itemRecipes,
+  };
+}
 
 export default function Index() {
   return (

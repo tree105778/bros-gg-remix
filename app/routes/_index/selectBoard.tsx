@@ -1,35 +1,10 @@
 import clsx from "clsx";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import ChampionSelectBoard from "./championSelectBoard";
 import ItemSelectBoard from "./itemSelectBoard";
-import type { Champion, ItemData } from "~/types";
-import { fetchData } from "~/lib";
-
-type DataState<T> = {
-  data: T | null;
-  loading: boolean;
-  error: string | null;
-};
 
 export default function SelectBoard() {
   const [champOrItemState, setChampOrItemState] = useState("champion");
-
-  const [champions, setChampions] = useState<DataState<Champion[]>>({
-    data: null,
-    loading: true,
-    error: null,
-  });
-
-  const [items, setItems] = useState<DataState<ItemData[]>>({
-    data: null,
-    loading: true,
-    error: null,
-  });
-
-  useEffect(() => {
-    fetchData<Champion[]>("/data/S13/champions.json", setChampions);
-    fetchData<ItemData[]>("/data/items/item.json", setItems);
-  }, []);
 
   const switchToggle: (index: string) => void = (index) => {
     setChampOrItemState(index);
@@ -60,9 +35,9 @@ export default function SelectBoard() {
       </nav>
 
       {champOrItemState === "champion" ? (
-        <ChampionSelectBoard data={champions} />
+        <ChampionSelectBoard />
       ) : (
-        <ItemSelectBoard data={items} />
+        <ItemSelectBoard />
       )}
     </div>
   );

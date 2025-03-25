@@ -48,7 +48,7 @@ export default function SynergyInfo({ trait }: { trait: Traits }) {
           alt={trait.trait}
         />
       </div>
-      <div className="w-[16px] h-6 text-[12px] rounded-[2px] bg-[#363944] leading-6">
+      <div className="w-[16px] text-center h-6 text-[12px] rounded-[2px] bg-[#363944] leading-6">
         {trait.count}
       </div>
       <div className="text-[12px] leading-3">
