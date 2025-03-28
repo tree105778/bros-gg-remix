@@ -1,6 +1,6 @@
-import { useDrag } from "react-dnd";
-import { useChampionAndIndexStore } from "~/store";
-import type { Item } from "~/types";
+import { useDrag } from 'react-dnd';
+import { useChampionAndIndexStore } from '~/store';
+import type { Item } from '~/types';
 
 export default function DraggableContainerItem({
   idx,
@@ -17,7 +17,7 @@ export default function DraggableContainerItem({
   const champion = championAndIndex[`${X},${Y}`];
   const { id, name, image, type } = item;
   const [, drag] = useDrag<Item>({
-    type: "ITEM",
+    type: 'ITEM',
     item: {
       id,
       name,
@@ -36,6 +36,14 @@ export default function DraggableContainerItem({
     <div
       ref={(node) => {
         if (node) drag(node);
+      }}
+      onContextMenu={(e) => {
+        if (champion.item) {
+          e.preventDefault();
+          const newItems = [...champion.item];
+          newItems.splice(idx, 1);
+          setChampionIndex(X, Y, { ...champion, item: newItems });
+        }
       }}
     >
       <div className="relative">

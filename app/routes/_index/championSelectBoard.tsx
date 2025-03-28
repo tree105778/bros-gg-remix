@@ -1,12 +1,12 @@
-import DraggableChampionImage from "./draggableChampionImage";
-import { useState } from "react";
-import type { ChangeEvent } from "react";
-import type { FetchChampions } from "~/types";
-import clsx from "clsx";
-import { processingChampions, updateProcessedChampions } from "~/lib";
-import { getChoseong } from "~/lib/getChoseong";
-import { useLoaderData } from "@remix-run/react";
-import type { loader } from "./route";
+import DraggableChampionImage from './draggableChampionImage';
+import { useState } from 'react';
+import type { ChangeEvent } from 'react';
+import type { FetchChampions } from '~/types';
+import clsx from 'clsx';
+import { processingChampions, updateProcessedChampions } from '~/lib';
+import { getChoseong } from '~/lib/getChoseong';
+import { useLoaderData } from '@remix-run/react';
+import type { loader } from './route';
 
 const ChampionSelectBoard = function () {
   const { champions: initialChampionsData } = useLoaderData<typeof loader>();
@@ -14,16 +14,16 @@ const ChampionSelectBoard = function () {
   const [champions, setChampions] = useState<FetchChampions[]>(
     initialChampionsData || []
   );
-  const [tabNavItem, setTabNabItem] = useState("name");
+  const [tabNavItem, setTabNabItem] = useState('name');
   const [processedChampions, setProcessedChampions] = useState<
     FetchChampions[]
   >(initialChampionsData || []);
-  const [onChangeChampionText, setOnchangeChampionText] = useState("");
+  const [onChangeChampionText, setOnchangeChampionText] = useState('');
 
   if (initialChampionsData == null) return ChampionSkeleton();
 
   const searchChampions = (text: string) => {
-    if (text === "") setProcessedChampions([...champions]);
+    if (text === '') setProcessedChampions([...champions]);
     else {
       setProcessedChampions(
         [...champions].filter(
@@ -50,10 +50,10 @@ const ChampionSelectBoard = function () {
 
   const setClsxClass: (state: string) => string = (state) =>
     clsx(
-      "w-[52px] h-[44px] text-center leading-[2.5]",
-      tabNavItem !== state && "text-[#999999] p-0",
+      'w-[52px] h-[44px] text-center leading-[2.5]',
+      tabNavItem !== state && 'text-[#999999] p-0',
       tabNavItem === state &&
-        "text-[#ca9372] font-semibold border-b-2 border-[#ca9372]"
+        'text-[#ca9372] font-semibold border-b-2 border-[#ca9372]'
     );
 
   return (
@@ -61,14 +61,14 @@ const ChampionSelectBoard = function () {
       <div className="flex items-center">
         <nav className="flex gap-4 px-[14px] flex-1">
           <div
-            className={setClsxClass("name")}
-            onClick={() => switchToggle("name")}
+            className={setClsxClass('name')}
+            onClick={() => switchToggle('name')}
           >
             이름순
           </div>
           <div
-            className={setClsxClass("price")}
-            onClick={() => switchToggle("price")}
+            className={setClsxClass('price')}
+            onClick={() => switchToggle('price')}
           >
             가격순
           </div>

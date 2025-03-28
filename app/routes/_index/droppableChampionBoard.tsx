@@ -1,11 +1,11 @@
-import { useEffect, useState } from "react";
-import { useDrag, useDrop } from "react-dnd";
-import { useChampionAndIndexStore, useTraitsStateStore } from "~/store";
-import type { Champion, Item } from "~/types";
-import DraggableContainerItem from "./draggableContainerItem";
-import { isItemDroppable, itemCombineProcess } from "~/lib/item";
-import { useLoaderData } from "@remix-run/react";
-import type { loader } from "./route";
+import { useEffect, useState } from 'react';
+import { useDrag, useDrop } from 'react-dnd';
+import { useChampionAndIndexStore, useTraitsStateStore } from '~/store';
+import type { Champion, Item } from '~/types';
+import DraggableContainerItem from './draggableContainerItem';
+import { isItemDroppable, itemCombineProcess } from '~/lib/item';
+import { useLoaderData } from '@remix-run/react';
+import type { loader } from './route';
 
 export default function DroppableChampionBoard({
   X,
@@ -28,7 +28,7 @@ export default function DroppableChampionBoard({
 
   const [{ canDrop, isOver }, drop] = useDrop(
     () => ({
-      accept: "CHAMPION",
+      accept: 'CHAMPION',
       canDrop: () => !champion,
       drop: (item: Champion) => {
         if (!item.star) item.star = 1;
@@ -45,7 +45,7 @@ export default function DroppableChampionBoard({
 
   const [, dropItem] = useDrop(
     {
-      accept: "ITEM",
+      accept: 'ITEM',
       canDrop: () => !!champion && isItemDroppable(champion),
       drop: (item: Item) => {
         if (champion) {
@@ -65,32 +65,16 @@ export default function DroppableChampionBoard({
     },
     [champion]
   );
-  // const [, dropItem] = useDrop(
-  //   () => ({
-  //     accept: "ITEM",
-  //     canDrop: () => !!champion && (champion.item?.length || 0) < 3,
-  //     drop: (item: Item) => {
-  //       if (champion) {
-  //         const newChampion: Champion = {
-  //           ...champion,
-  //           item: [...(champion.item || []), item],
-  //         };
-  //         setChampionIndex(X, Y, newChampion);
-  //       }
-  //     },
-  //   }),
-  //   [champion]
-  // );
 
   const [, drag] = useDrag<Champion, void, { isDragging: boolean }>(
     () => ({
-      type: "CHAMPION",
+      type: 'CHAMPION',
       item: {
         id: champion?.id || 0,
-        name: champion?.name || "",
+        name: champion?.name || '',
         cost: champion?.cost || 0,
         traits: champion?.traits || [],
-        image: champion?.image || "",
+        image: champion?.image || '',
         star: champion?.star,
         item: champion?.item,
       },
@@ -134,7 +118,7 @@ export default function DroppableChampionBoard({
           <div
             className="absolute top-0 left-[50%] z-[1]"
             style={{
-              transform: "translateX(-50%)",
+              transform: 'translateX(-50%)',
             }}
             onClick={starHandleClick}
           >
@@ -156,16 +140,23 @@ export default function DroppableChampionBoard({
               dropItem(node);
             }
           }}
+          onContextMenu={(e) => {
+            if (champion) {
+              e.preventDefault();
+              removeChampionIndex(X, Y);
+              removeTraitsState(champion);
+            }
+          }}
           style={{
             backgroundColor: isOver
               ? canDrop
-                ? "lightgreen"
-                : "transparent"
-              : "rgb(34, 34, 34)",
-            width: "100%",
-            height: "100%",
+                ? 'lightgreen'
+                : 'transparent'
+              : 'rgb(34, 34, 34)',
+            width: '100%',
+            height: '100%',
             clipPath:
-              "polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)",
+              'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)',
           }}
         >
           {champion !== undefined ? (

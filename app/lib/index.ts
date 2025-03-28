@@ -1,6 +1,6 @@
-import type { Champion, DataState } from "~/types";
-import { getChoseong } from "./getChoseong";
-import type React from "react";
+import type { Champion, DataState } from '~/types';
+import { getChoseong } from './getChoseong';
+import type React from 'react';
 
 export const processingChampions = (
   criteria: string,
@@ -8,12 +8,12 @@ export const processingChampions = (
 ) => {
   let sortedChampions = [...champions];
   switch (criteria) {
-    case "name":
+    case 'name':
       sortedChampions = sortedChampions.sort((a, b) =>
         a.name.localeCompare(b.name)
       );
       break;
-    case "price":
+    case 'price':
       sortedChampions = sortedChampions.sort((a, b) => a.cost - b.cost);
       break;
     default:
@@ -29,17 +29,17 @@ export const updateProcessedChampions = (
 ) => {
   let newChampions = [...data];
   switch (criteria) {
-    case "name":
+    case 'name':
       newChampions = newChampions.sort((a, b) => a.name.localeCompare(b.name));
       break;
-    case "price":
+    case 'price':
       newChampions = newChampions.sort((a, b) => a.cost - b.cost);
       break;
     default:
       newChampions = [...data];
   }
 
-  if (searchText !== "") {
+  if (searchText !== '') {
     newChampions = newChampions.filter(
       (champ) =>
         champ.name.includes(searchText) ||
@@ -63,7 +63,7 @@ export const fetchData = async <T>(
     setState((prev) => ({
       ...prev,
       loading: false,
-      error: error instanceof Error ? error.message : "Unknown Error occurred",
+      error: error instanceof Error ? error.message : 'Unknown Error occurred',
     }));
   }
 };

@@ -1,5 +1,5 @@
-import DroppableChampionBoard from "./droppableChampionBoard";
-import styles from "./main.module.css";
+import DroppableChampionBoard from './droppableChampionBoard';
+import styles from './main.module.css';
 
 export default function BoardBuilder() {
   return (
@@ -9,7 +9,7 @@ export default function BoardBuilder() {
           <div
             key={idx}
             className={`${styles.hexagonWrapper}${
-              Math.floor(idx / 7) % 2 === 1 ? " " + styles.offset : ""
+              Math.floor(idx / 7) % 2 === 1 ? ' ' + styles.offset : ''
             }`}
           >
             <DroppableChampionBoard X={Math.floor(idx / 7)} Y={idx % 7} />

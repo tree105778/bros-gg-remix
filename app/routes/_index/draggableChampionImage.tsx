@@ -1,5 +1,5 @@
-import { useDrag } from "react-dnd";
-import type { Champion, FetchChampions } from "~/types";
+import { useDrag } from 'react-dnd';
+import type { Champion, FetchChampions } from '~/types';
 
 export default function DraggableChampionImage({
   champion,
@@ -8,7 +8,7 @@ export default function DraggableChampionImage({
 }) {
   const { id, name, cost, traits, image } = champion;
   const [, drag] = useDrag<Champion>(() => ({
-    type: "CHAMPION",
+    type: 'CHAMPION',
     item: {
       id,
       name,

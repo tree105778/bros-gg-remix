@@ -1,5 +1,5 @@
-import type { Traits, SynergyData } from "~/types";
-import synergyData from "~/data/S13/synergy.json";
+import type { Traits, SynergyData } from '~/types';
+import synergyData from '~/data/S13/synergy.json';
 
 export default function SynergyInfo({ trait }: { trait: Traits }) {
   const { traits } = synergyData as SynergyData;

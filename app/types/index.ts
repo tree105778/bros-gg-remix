@@ -1,20 +1,20 @@
-import type { Database } from "./database.types";
+import type { Database } from './database.types';
 
 export enum ItemType {
-  BASE = "BASE",
-  COMBINED = "COMBINED",
-  EMBLEM = "EMBLEM",
-  SPECIAL = "SPECIAL",
+  BASE = 'BASE',
+  COMBINED = 'COMBINED',
+  EMBLEM = 'EMBLEM',
+  SPECIAL = 'SPECIAL',
 }
 
 export type FetchChampions =
-  Database["public"]["Tables"]["champions_s13"]["Row"];
+  Database['public']['Tables']['champions_s13']['Row'];
 
-export type FetchItems = Database["public"]["Tables"]["items"]["Row"];
+export type FetchItems = Database['public']['Tables']['items']['Row'];
 
 export type Champion = FetchChampions & { star?: number; item?: Item[] };
 
-export type ItemRecipes = Database["public"]["Tables"]["item_recipes"]["Row"];
+export type ItemRecipes = Database['public']['Tables']['item_recipes']['Row'];
 
 // export type Champion = {
 //   id: number;
@@ -68,8 +68,8 @@ export type TraitsState = {
 };
 
 export type TraitsStateStore = {
-  droppedItems: TraitsState["droppedItems"];
-  traits: TraitsState["traits"];
+  droppedItems: TraitsState['droppedItems'];
+  traits: TraitsState['traits'];
   addTraitsState: (champion: Champion) => void;
   removeTraitsState: (champion: Champion) => void;
   removeAllTraitsState: () => void;

@@ -2,8 +2,8 @@ import {
   fetchChampionsData,
   fetchItemData,
   fetchItemRecipes,
-} from "~/lib/supabase";
-import BoardWithSelect from "./boardWithSelect";
+} from '~/lib/supabase';
+import BoardWithSelect from './boardWithSelect';
 
 export async function loader() {
   const champions = await fetchChampionsData();

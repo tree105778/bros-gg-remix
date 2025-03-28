@@ -1,6 +1,6 @@
-import { create } from "zustand";
-import type { ChampionIndexInfo, TraitsState, TraitsStateStore } from "./types";
-import { immer } from "zustand/middleware/immer";
+import { create } from 'zustand';
+import type { ChampionIndexInfo, TraitsState, TraitsStateStore } from './types';
+import { immer } from 'zustand/middleware/immer';
 
 export const useChampionAndIndexStore = create<ChampionIndexInfo>()(
   immer((set) => ({

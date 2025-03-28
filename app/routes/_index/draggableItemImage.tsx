@@ -1,10 +1,10 @@
-import { useDrag } from "react-dnd";
-import type { Item } from "~/types";
+import { useDrag } from 'react-dnd';
+import type { Item } from '~/types';
 
 export default function DraggableItemImage({ item }: { item: Item }) {
   const { id, name, image, type } = item;
   const [, drag] = useDrag<Item>(() => ({
-    type: "ITEM",
+    type: 'ITEM',
     item: {
       id,
       name,

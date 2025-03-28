@@ -1,5 +1,5 @@
-import { useChampionAndIndexStore, useTraitsStateStore } from "~/store";
-import SynergyInfo from "./synergyInfo";
+import { useChampionAndIndexStore, useTraitsStateStore } from '~/store';
+import SynergyInfo from './synergyInfo';
 
 export default function TraitSynergyTab() {
   const { traits, removeAllTraitsState } = useTraitsStateStore();

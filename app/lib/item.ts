@@ -1,5 +1,5 @@
-import { ItemType } from "~/types";
-import type { Champion, FetchItems, Item, ItemRecipes } from "~/types";
+import { ItemType } from '~/types';
+import type { Champion, FetchItems, Item, ItemRecipes } from '~/types';
 
 export const isItemDroppable = (champion: Champion) => {
   if ((champion.item?.length || 0) < 3) return true;
@@ -19,8 +19,13 @@ export function itemCombineProcess(
 ) {
   if (!itemRecipes || !items) return;
   if (champion.item) {
-    const idx = champion.item.findIndex((it) => it.type == ItemType.BASE);
-    if (idx !== -1 && item.type === ItemType.BASE) {
+    const idx = champion.item.findIndex(
+      (it) => it.type === ItemType.BASE || it.type === ItemType.SPECIAL
+    );
+    if (
+      idx !== -1 &&
+      (item.type === ItemType.BASE || item.type === ItemType.SPECIAL)
+    ) {
       const max_id =
         champion.item[idx].id >= item.id ? champion.item[idx].id : item.id;
       const min_id =
