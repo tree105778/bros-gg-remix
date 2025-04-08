@@ -1,23 +1,27 @@
-import { useLoaderData } from '@remix-run/react';
+import { Await, useLoaderData } from '@remix-run/react';
 import type { loader } from './route';
 import DraggableItemImage from './draggableItemImage';
 import type { ItemType } from '~/types';
+import { Suspense } from 'react';
 
 const ItemSelectBoard = function () {
-  const { items } = useLoaderData<typeof loader>();
+  const { items: itemsPromise } = useLoaderData<typeof loader>();
 
   return (
     <>
-      {items ? (
-        <div className="flex gap-2 flex-wrap m-3">
-          {items.map((item, idx) => {
-            const newItem = { ...item, type: item.type as ItemType };
-            return <DraggableItemImage key={idx} item={newItem} />;
-          })}
-        </div>
-      ) : (
-        <ItemSkeleton />
-      )}
+      <Suspense fallback={<ItemSkeleton />}>
+        <Await resolve={itemsPromise}>
+          {(items) => (
+            <div className="flex gap-2 flex-wrap m-3">
+              {items?.map((item, idx) => {
+                const newItem = { ...item, type: item.type as ItemType };
+                return <DraggableItemImage key={idx} item={newItem} />;
+              })}
+            </div>
+          )}
+        </Await>
+      </Suspense>
+      )
     </>
   );
 };

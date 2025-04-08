@@ -47,6 +47,7 @@ export default function DraggableChampionImage({
               drag(node);
             }
           }}
+          loading="lazy"
           src={champion.image}
           alt={champion.name}
           width={70}

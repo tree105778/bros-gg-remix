@@ -4,17 +4,18 @@ import {
   fetchItemRecipes,
 } from '~/lib/supabase';
 import BoardWithSelect from './boardWithSelect';
+import { defer } from '@remix-run/server-runtime';
 
 export async function loader() {
   const champions = await fetchChampionsData();
-  const items = await fetchItemData();
+  const items = fetchItemData();
   const itemRecipes = await fetchItemRecipes();
 
-  return {
+  return defer({
     champions,
     items,
     itemRecipes,
-  };
+  });
 }
 
 export default function Index() {

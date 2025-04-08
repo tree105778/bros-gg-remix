@@ -20,7 +20,7 @@ const ChampionSelectBoard = function () {
   >(initialChampionsData || []);
   const [onChangeChampionText, setOnchangeChampionText] = useState('');
 
-  if (initialChampionsData == null) return ChampionSkeleton();
+  if (initialChampionsData == null) return <ChampionSkeleton />;
 
   const searchChampions = (text: string) => {
     if (text === '') setProcessedChampions([...champions]);

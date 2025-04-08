@@ -41,6 +41,7 @@ export default function DraggableItemImage({ item }: { item: FetchItems }) {
             if (node) drag(node);
           }}
           className="object-contain"
+          loading="lazy"
           alt={name}
           src={image}
           width={40}
