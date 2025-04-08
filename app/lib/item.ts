@@ -1,12 +1,10 @@
-import { ItemType } from '~/types';
-import type { Champion, FetchItems, Item, ItemRecipes } from '~/types';
+import { ItemType } from "~/types";
+import type { Champion, FetchItems, Item, ItemRecipes } from "~/types";
 
 export const isItemDroppable = (champion: Champion) => {
   if ((champion.item?.length || 0) < 3) return true;
   if (champion.item && champion.item.length === 3) {
-    return champion.item.find((item) => item.type == ItemType.BASE)
-      ? true
-      : false;
+    return !!champion.item.find((item) => item.type == ItemType.BASE);
   }
   return false;
 };
